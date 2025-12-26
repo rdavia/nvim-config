@@ -14,7 +14,12 @@ return {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     config = function()
-      require('nvim-treesitter.configs').setup {
+      local status_ok, treesitter = pcall(require, 'nvim-treesitter.configs')
+      if not status_ok then
+        return
+      end
+
+      treesitter.setup {
         ensure_installed = { "lua", "vim", "javascript", "typescript", "html", "css" },
         highlight = { enable = true },
       }
@@ -32,6 +37,7 @@ return {
 
   -- Mejores movimientos con s/S (opcional pero útil)
   { 'ggandor/leap.nvim' },
+
   -- Headlines: highlighting for MarkDown files
   {
     "lukas-reineke/headlines.nvim",
